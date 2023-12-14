@@ -3,30 +3,9 @@ clear;
 clc;
 close;
 
-%Inputs:
-%       (1)  n_pw    == number of passengers in the width direction.
-%       (2)  N_pass  == total number of passengers.
-%       (3)  W_MSC   == weight of the medical supply cabinet.
-%       (4)  TR_w    == taper ratio of the wing.
-%       (5)  C_w_r   == chord of the main wing at the root.
-%       (6)  F_w     == fuselage width.
-%       (7)  b_w     == wing span.
-%       (8)  X_w     == the position of the wing.
-%       (9)  C_t     == the chord of the tail.
-%       (10) b_t     == the span of the tail.
-%       (11) AR      == the aspect ratio.
 
-ranges = [1,2;     %n_pw
-          2,4;    %N_pass
-          0.1, 0.15;   %W_MSC
-          0.8, 1.0; %TR_w
-          0.2, 0.4; %C_w_r
-          0.1, 0.5; %F_w
-          0.8, 1.5; %b_w
-          0.2, 0.3;%X_w
-          0.06, 0.2; %C_t
-          0.8, 1.3; %b_t
-          0.65, 1.3]; %AR          
+
+load('ranges.mat');
 
 rng("shuffle");
 
