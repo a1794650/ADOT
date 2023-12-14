@@ -51,6 +51,8 @@ addpath('./misc_funs/drag');
 %Suppresses warning from readtable:
 warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames'); 
 
+
+
 %load in the battery table:
 batterySpecs = readtable("BatterySpecs.xlsx");
 
@@ -59,6 +61,7 @@ batterySpecs = readtable("BatterySpecs.xlsx");
 motorSpecs = readtable("MotorSpecs.xlsx");
 wingSpecs = JavaFoilData('wing');
 tailSpecs = JavaFoilData('tail');
+
 
 count = 0;
 
