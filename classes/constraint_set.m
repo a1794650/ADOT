@@ -41,7 +41,7 @@ classdef constraint_set
         function [nonlcon,eqcon] = eval_constraints(obj,vars, plane) 
             N_constraints = size(obj.names,1);
 
-            vars2aircraft(vars,plane); %This puts the optimisation variables in the plane.
+            plane.link_opt_vars(vars); %This puts the optimisation variables in the plane.
 
             calcs(plane); %everytime this function is called, the plane must be updated!
             nonlcon = [];

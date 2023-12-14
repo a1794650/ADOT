@@ -24,7 +24,6 @@ addpath('./con_funs');
 addpath('./classes');
 
 %Add sub-subdirectories:
-addpath('./misc_funs/wrappers');
 addpath('./misc_funs/scoring');
 addpath('./misc_funs/mass_funs');
 addpath('./misc_funs/dimensions');
