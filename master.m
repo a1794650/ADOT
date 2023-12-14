@@ -1,5 +1,5 @@
 %Name:        Isaac Nakone, Denis Vasilyev, Harry Rowton, Jingya Liu
-%Date:        14/12/2023
+%Date:        15/12/2023
 %Description: Master code for the ADOT calls all the sub-functions. When
 %             completed this will both generate valid designs and optimise 
 %             those designs.
@@ -30,7 +30,6 @@ addpath('./misc_funs/mass_funs');
 addpath('./misc_funs/dimensions');
 addpath('./misc_funs/cruise');
 addpath('./misc_funs/center_of_gravity');
-addpath('./misc_funs/linkers');
 addpath('./misc_funs/drag');
 
 
@@ -77,14 +76,14 @@ while (count < N_valid)
     vert_index    = horz_index;
 
     %Link the battery to the aircraft:
-    battery2aircraft(plane, battery_index, batterySpecs);
+    plane.link_battery( battery_index, batterySpecs);
 
     %Link the motor to the aircraft:
-    motor2aircraft(plane, motor_index, motorSpecs);
+    plane.link_motor( motor_index, motorSpecs);
 
 
     %Link the airfoils to the aircraft:
-    airfoils2aircraft(plane,wingSpecs, tailSpecs,... 
+    plane.link_airfoils(wingSpecs, tailSpecs,... 
                         wing_index, horz_index, vert_index);
 
     
@@ -93,7 +92,7 @@ while (count < N_valid)
 
     vars = (ranges(:,2)-ranges(:,1)).*xn + ranges(:,1);
 
-    vars(11) = min(vars(9), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
+    vars(10) = min(vars(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
 
 
     [nonlcon,eqcon] = constraints.eval_constraints(vars, plane);

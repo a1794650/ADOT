@@ -1,3 +1,7 @@
+%Name:        Isaac Nakone, Denis Vasilyev, Harry Rowton, Jingya Liu
+%Date:        15/12/2023
+%Description: Code for github stuff.
+
 clc;
 clear;
 close all;

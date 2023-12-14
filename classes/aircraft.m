@@ -1,12 +1,17 @@
-%Name:    Isaac Nakone
-%Date:    11/12/2023
-%Purpose: This is a class definition for an
-%         aircraft to be used in the ADOT code.
+%Name:        Isaac Nakone, Denis Vasilyev, Harry Rowton, Jingya Liu
+%Date:        15/12/2023
+%Description: This is a class definition for an
+%             aircraft to be used in the ADOT code.
+%             Note that unknown variables are set to
+%             NaN to begin with to ensure that we are
+%             not using unspecified values in the maths.
 
 classdef aircraft < handle &...  %Inherits handle properties.
         matlab.mixin.SetGet &... %Inherits setters and getters.
         matlab.mixin.Copyable    %Is copyable.
     properties 
+
+        %Variables related to the whole plane:
         static_margin2 = NaN;
         static_margin3 = NaN;
 
@@ -24,13 +29,23 @@ classdef aircraft < handle &...  %Inherits handle properties.
         mass = NaN;
 
         aerodynamic_center2 = NaN;
-
         aerodynamic_center3 = NaN;
 
+
+        %Unit conversions:
         units = struct('in2mm', 0.0254, 'g2kg', 1e-3, 'mm2m', 1e-3,...
                        'h2s', 3600, 'min2s', 60, 'W2mW', 1e3, 'min2h', 0.0167,...
                        'kg2lb', 2.2046, 'W2hp', 0.0013, 'm2ft', 3.2808, 'ft2m', 0.3048);
 
+        %Physical parameters:
+        physics = struct('air_density0',1.225, ...
+            'air_density30',1.775, 'gravity',9.81, ...
+            'kinematic_viscosity', 0.00001798,...
+            'gas_constant', 287, 'thermodynamic_ratio', 1.4,...
+            'temperature', 12.224 + 273.15);
+
+
+        %Size of the course that we will fly through.
         course = struct('length', 610, 'takeoff_distance' ,20);
 
         score = struct('M1', 1.0, 'M2', NaN, 'M3', NaN, 'baseline2',0.01,'baseline3',0.005,...
@@ -120,14 +135,47 @@ classdef aircraft < handle &...  %Inherits handle properties.
 
         trays = struct('thickness', 0.005, 'mass', NaN);
 
-        physics = struct('air_density0',1.225, ...
-            'air_density30',1.775, 'gravity',9.81, ...
-            'kinematic_viscosity', 0.00001798,...
-            'gas_constant', 287, 'thermodynamic_ratio', 1.4,...
-            'temperature', 12.224 + 273.15);
+        
     end
 
     methods 
+
+        function link_battery(obj, battery_index, batterySpecs)
+            obj.battery.capacity = batterySpecs.batteryCapacity_mAh_(battery_index);
+            obj.battery.width    = batterySpecs.Bw_mm_(battery_index)*obj.units.mm2m;
+            obj.battery.height   = batterySpecs.Bh(battery_index)*obj.units.mm2m;
+            obj.battery.length   = batterySpecs.Bl(battery_index)*obj.units.mm2m;
+            obj.battery.mass     = batterySpecs.weight_g_(battery_index)*obj.units.g2kg;
+            obj.battery.voltage  = 22.2; %change this???
+        end
+
+        function link_motor(obj, motor_index, motorSpecs)
+            obj.motor.power_max = motorSpecs.BatteryPower_W_(motor_index);
+            obj.motor.mass = motorSpecs.weight_g_(motor_index)*obj.units.g2kg;
+            obj.motor.number = 2;
+
+        end
+
+        function link_airfoils(obj,wingSpecs, tailSpecs,... 
+            wing_index, horz_index, vert_index)
+            obj.wing.coeff_liftA = wingSpecs(wing_index).CL_a;
+            obj.wing.coeff_lift0 = wingSpecs(wing_index).C_L_0;
+            obj.wing.coeff_lift_max = wingSpecs(wing_index).C_L_max;
+            obj.wing.coeff_drag_data = table2array(wingSpecs(wing_index).C_D_data);
+            obj.wing.thickness = wingSpecs(wing_index).th;
+        
+            obj.horz_stabiliser.coeff_liftA = tailSpecs(horz_index).CL_a;
+            obj.horz_stabiliser.coeff_lift0 = tailSpecs(horz_index).C_L_0;
+            obj.horz_stabiliser.coeff_lift_max = tailSpecs(horz_index).C_L_max;
+            obj.horz_stabiliser.coeff_drag_data = table2array(tailSpecs(horz_index).C_D_data);
+            obj.horz_stabiliser.thickness = wingSpecs(horz_index).th;
+        
+            obj.vert_stabiliser.coeff_liftA = tailSpecs(vert_index).CL_a;
+            obj.vert_stabiliser.coeff_lift0 = tailSpecs(vert_index).C_L_0;
+            obj.vert_stabiliser.coeff_lift_max = tailSpecs(vert_index).C_L_max;
+            obj.vert_stabiliser.coeff_drag_data = table2array(tailSpecs(vert_index).C_D_data);
+            obj.vert_stabiliser.thickness = wingSpecs(vert_index).th;
+        end
 
 
     end

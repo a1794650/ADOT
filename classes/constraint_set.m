@@ -1,5 +1,5 @@
-%Name:     Isaac Nakone
-%Date:     11/12/2023
+%Name:        Isaac Nakone, Denis Vasilyev, Harry Rowton, Jingya Liu
+%Date:        15/12/2023
 %Purpose:  This is a class to be used to store the 
 %          ADOT constraints.
 
@@ -41,7 +41,7 @@ classdef constraint_set
         function [nonlcon,eqcon] = eval_constraints(obj,vars, plane) 
             N_constraints = size(obj.names,1);
 
-            vars2aircraft(vars,plane);
+            vars2aircraft(vars,plane); %This puts the optimisation variables in the plane.
 
             calcs(plane); %everytime this function is called, the plane must be updated!
             nonlcon = [];
