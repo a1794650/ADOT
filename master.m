@@ -1,3 +1,11 @@
+%Name:        Isaac Nakone, Denis Vasilyev, Harry Rowton, Jingya Liu
+%Date:        14/12/2023
+%Description: Master code for the ADOT calls all the sub-functions. When
+%             completed this will both generate valid designs and optimise 
+%             those designs.
+
+
+
 
 clear;
 clc;
