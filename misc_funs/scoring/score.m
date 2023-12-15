@@ -3,11 +3,13 @@
 %Purpose: This calculates the score for mission 2, as well as updating the
 %         relevant parameters of the aircraft.
 
-function S = score(plane, vars)
+function S = score(plane, opt_vars, stab_vars)
 
-    if (nargin == 2)
+    if (nargin == 3)
 
-        vars2aircraft(vars,plane); %Need to do this to update plane object.
+        plane.link_opt_vars(opt_vars); %Need to do this to update plane object.
+
+        plane.link_stab_vars(stab_vars);
 
     end
 
@@ -19,7 +21,7 @@ function S = score(plane, vars)
 
     score3(plane);
 
-    plane.score.total = plane.score.M1 + plane.score.M1 + plane.score.M3;
+    plane.score.total = plane.score.M1 + plane.score.M2 + plane.score.M3;
 
 
     S = plane.score.total;

@@ -35,6 +35,7 @@ function aerofoil_data = JavaFoilData(type)
                 currentTable.Cl_1(min_angle + 30 : 60)), ...
                 currentTable.Cl_2(min_angle + 30 : 60)));
             aerofoil.C_D_data = table(C_D_data, alpha);                                       %Add C_D data to aerfoil struct to be able to calculate the C_D
+            aerofoil.C_D_data(1,:) = [];
             aerofoil.flap_size = sheetNames(j);
             aerofoil_data(num_aerofoils) = aerofoil;                            %Add aerofoil to aerofoil table
             num_aerofoils = num_aerofoils+1;                                    %Incremenet number of aerfoils in table

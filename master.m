@@ -5,6 +5,18 @@
 %             those designs.
 
 
+% 
+% obj.passengers.nwidth            = opt_vars(1);  
+% obj.passengers.total             = opt_vars(2);
+% obj.msc.mass                     = opt_vars(3);
+% obj.wing.taper_ratio             = opt_vars(4);
+% obj.wing.chord_root              = opt_vars(5);
+% obj.fuselage.width               = opt_vars(6);
+% obj.wing.span                    = opt_vars(7);
+% obj.wing.position                = opt_vars(8);
+% obj.horz_stabiliser.chord_root   = opt_vars(9);
+% obj.horz_stabiliser.span         = opt_vars(10);
+% obj.misc_properties.aspect_ratio = opt_vars(11);
 
 
 clear;
@@ -61,8 +73,8 @@ constraints = constraint_set;
 
 N = 0;
 
-options=optimoptions(@fmincon,'Display','off');
-
+options1=optimoptions(@fmincon,'Display','off');
+options=optimoptions(@fminimax,'Display','off');
 
 while (count < N_valid)
     tic
@@ -101,43 +113,90 @@ while (count < N_valid)
     opt_vars0(10) = min(opt_vars0(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
     stab_vars = 0.55;
 
-    % opt_vars = fminimax(@(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),...
-    %                   opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2), [],options);
+    % [opt_vars1,S] = fmincon(@(opt_vars)score(plane, opt_vars,stab_vars ),opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
+    %                     @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options1);
 
 
-    for i = 1:N_iters
-        opt_vars = fmincon(@(opt_vars)0,opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
-            @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options);
-    
-        [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
-    
-        
-    
-        if (sum(nonlcon > 0) == 0) %This means plane has satisfied constraints
-            
-    
-            count = count + 1;
-    
-            valid(count) = plane;
-    
-            disp(count);
-            toc
-            break;
-            
-        else
-            opt_vars0 = opt_vars;
+   plane.link_opt_vars(opt_vars0);
 
-        end
+   % plane.score.total = S;
 
-    end
+   [nonlcon,eqcon] = constraints.eval_constraints(opt_vars0,stab_vars, plane);
+
+   if (sum(nonlcon>0) == 0)
+
+       count = count + 1;
+
+       disp(N);
+
+       valid(count) = plane; 
+
+   end
+
+    % for i = 1:N_iters
+    % 
+    %     opt_vars = fminimax(@(opt_vars)weighted_constraints(opt_vars,stab_vars, plane, weights,constraints),...
+    %                  opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2), [],options);
+    % 
+    % 
+    % 
+    %     opt_vars(10) = min(opt_vars(10), 2.5*0.3048); 
+    %     [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
+    % 
+    % 
+    % 
+    %     if (sum(nonlcon>0) == 0) %This means plane has satisfied constraints
+    %         toc
+    % 
+    %         tic
+    % 
+    %         count = count + 1;
+    % 
+    % 
+    % 
+    %         [opt_vars1,S] = fmincon(@(opt_vars)score(plane, opt_vars),opt_vars,[],[],[],[],ranges(:,1),ranges(:,2),...
+    %                     @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options1);
+    % 
+    %         toc
+    % 
+    %         plane.link_opt_vars(opt_vars1);
+    % 
+    %         plane.score.total = S;
+    % 
+    %         valid(count) = plane;
+    % 
+    % 
+    %         disp(count);
+    % 
+    %         break;
+    % 
+    %     else
+    %         opt_vars0 = opt_vars;
+    % 
+    %     end
+    % 
+    % end
 
     
    
 end
 
+for i = 1:10
+
+    disp(valid(i).wing.span);
+
+
+end
 
 
 
+function [nonlcon_weighted, eqcon] = weighted_constraints(opt_vars,stab_vars, plane, weights, constraints)
+    [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
+    
+    nonlcon_weighted = weights.*nonlcon;
+
+   
+end
 
 
 
