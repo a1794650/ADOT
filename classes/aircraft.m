@@ -139,18 +139,23 @@ classdef aircraft < handle &...  %Inherits handle properties.
 
     methods 
 
-        function link_opt_vars(obj, vars)
-            obj.passengers.nwidth            = vars(1);  
-            obj.passengers.total             = vars(2);
-            obj.msc.mass                     = vars(3);
-            obj.wing.taper_ratio             = vars(4);
-            obj.wing.chord_root              = vars(5);
-            obj.fuselage.width               = vars(6);
-            obj.wing.span                    = vars(7);
-            obj.wing.position                = vars(8);
-            obj.horz_stabiliser.chord_root   = vars(9);
-            obj.horz_stabiliser.span         = vars(10);
-            obj.misc_properties.aspect_ratio = vars(11);
+        function link_opt_vars(obj, opt_vars)
+            obj.passengers.nwidth            = opt_vars(1);  
+            obj.passengers.total             = opt_vars(2);
+            obj.msc.mass                     = opt_vars(3);
+            obj.wing.taper_ratio             = opt_vars(4);
+            obj.wing.chord_root              = opt_vars(5);
+            obj.fuselage.width               = opt_vars(6);
+            obj.wing.span                    = opt_vars(7);
+            obj.wing.position                = opt_vars(8);
+            obj.horz_stabiliser.chord_root   = opt_vars(9);
+            obj.horz_stabiliser.span         = opt_vars(10);
+            obj.misc_properties.aspect_ratio = opt_vars(11);
+        end
+
+
+        function link_stab_vars(obj, stab_vars)
+            obj.msc.COG = stab_vars(1);  
         end
 
         function link_battery(obj, battery_index, batterySpecs)

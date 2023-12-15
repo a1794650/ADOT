@@ -44,6 +44,8 @@ batterySpecs = readtable("BatterySpecs.xlsx");
 
 %load in the motor table:
 motorSpecs = readtable("MotorSpecs.xlsx");
+
+%load in the airfoil tables:
 wingSpecs = JavaFoilData('wing');
 tailSpecs = JavaFoilData('tail');
 
@@ -90,12 +92,12 @@ while (count < N_valid)
 
     
     %generate some random params on interval [0,1]:
-    vars = (ranges(:,2)-ranges(:,1)).*rand(size(ranges,1),1) + ranges(:,1);
+    opt_vars = (ranges(:,2)-ranges(:,1)).*rand(size(ranges,1),1) + ranges(:,1);
 
-    vars(10) = min(vars(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
+    opt_vars(10) = min(opt_vars(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
+    stab_vars = 0.55;
 
-
-    [nonlcon,eqcon] = constraints.eval_constraints(vars, plane);
+    [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
 
     
 

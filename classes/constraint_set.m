@@ -38,12 +38,17 @@ classdef constraint_set
         %This code here automatically takes the names and calls the
         %nonlcons. Note eqcon = [] because there are no equality
         %constraints.
-        function [nonlcon,eqcon] = eval_constraints(obj,vars, plane) 
+        function [nonlcon,eqcon] = eval_constraints(obj,opt_vars,stab_vars,plane) 
             N_constraints = size(obj.names,1);
 
-            plane.link_opt_vars(vars); %This puts the optimisation variables in the plane.
+            %This puts the optimisation variables in the plane.
+            plane.link_opt_vars(opt_vars); 
 
-            calcs(plane); %everytime this function is called, the plane must be updated!
+            %This puts the stabilisation variables in the plane.
+            plane.link_stab_vars(stab_vars);
+
+            %Everytime this function is called, the plane must be updated!
+            calcs(plane);
             nonlcon = [];
 
 
