@@ -54,16 +54,18 @@ count = 0;
 
 N_valid = 10;
 
+N_iters = 1;
+
 
 constraints = constraint_set;
 
 N = 0;
 
-options=optimoptions(@fminimax,'Display','off');
+options=optimoptions(@fmincon,'Display','off');
 
-tic
+
 while (count < N_valid)
-
+    tic
     % disp(N);
 
     N = N + 1;
@@ -99,22 +101,34 @@ while (count < N_valid)
     opt_vars0(10) = min(opt_vars0(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
     stab_vars = 0.55;
 
-    opt_vars = fminimax(@(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),...
-                      opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2), [],options);
+    % opt_vars = fminimax(@(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),...
+    %                   opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2), [],options);
 
-    [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
 
+    for i = 1:N_iters
+        opt_vars = fmincon(@(opt_vars)0,opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
+            @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options);
     
+        [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
+    
+        
+    
+        if (sum(nonlcon > 0) == 0) %This means plane has satisfied constraints
+            
+    
+            count = count + 1;
+    
+            valid(count) = plane;
+    
+            disp(count);
+            toc
+            break;
+            
+        else
+            opt_vars0 = opt_vars;
 
-    if (sum(nonlcon > 0) == 0) %This means plane has satisfied constraints
-        toc
+        end
 
-        count = count + 1;
-
-        valid(count) = plane;
-
-        disp(count);
-        tic
     end
 
     
