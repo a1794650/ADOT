@@ -87,7 +87,6 @@ classdef aircraft < handle &...  %Inherits handle properties.
                                  'interference_factor', 1.04,...
                                  'angle', 60, 'mass', NaN, 'area_density', 0.1);
 
-        tail = struct('angle',60);
 
         cruise_properties = struct('speed',NaN, 'power', NaN, 'capacity', NaN, 'laps3', ...
                                     NaN, 'time2', NaN, 'coeff_lift', NaN);
@@ -160,7 +159,6 @@ classdef aircraft < handle &...  %Inherits handle properties.
             obj.battery.height   = batterySpecs.Bh(battery_index)*obj.units.mm2m;
             obj.battery.length   = batterySpecs.Bl(battery_index)*obj.units.mm2m;
             obj.battery.mass     = batterySpecs.weight_g_(battery_index)*obj.units.g2kg;
-            obj.battery.voltage  = 22.2; %change this???
         end
 
         function link_motor(obj, motor_index, motorSpecs)
@@ -189,6 +187,73 @@ classdef aircraft < handle &...  %Inherits handle properties.
             obj.vert_stabiliser.coeff_lift_max = tailSpecs(vert_index).C_L_max;
             obj.vert_stabiliser.coeff_drag_data = table2array(tailSpecs(vert_index).C_D_data);
             obj.vert_stabiliser.thickness = wingSpecs(vert_index).th;
+        end
+
+        function link_constants(obj,constant_table)
+
+            obj.static_margin_min_req = constant_table.static_margin_min_req;
+            obj.static_margin_max_req = constant_table.static_margin_max_req;
+            obj.num_power_vals = constant_table.num_power_vals;
+
+            obj.units = constant_table.units;
+
+            obj.physics = constant_table.physics;
+
+            obj.course = constant_table.course;
+
+            obj.score.baseline2 = constant_table.score.baseline2;
+            obj.score.baseline3 = constant_table.score.baseline3;
+
+            obj.passengers.doll_length = constant_table.passengers.doll_length;
+            obj.passengers.doll_width = constant_table.passengers.doll_width;
+            obj.passengers.doll_mass = constant_table.passengers.doll_mass;
+
+            obj.fuselage.density = constant_table.fuselage.density;
+            obj.fuselage.wall_thickness = constant_table.fuselage.wall_thickness;
+            obj.fuselage.tray_thickness = constant_table.fuselage.tray_thickness;
+            obj.fuselage.object_spacing = constant_table.fuselage.object_spacing;
+            obj.fuselage.interference_factor = constant_table.fuselage.interference_factor;
+            
+            obj.wing.area_density = constant_table.wing.area_density;
+            obj.wing.sweep_angle25 = constant_table.wing.sweep_angle25;
+            obj.wing.interference_factor = constant_table.wing.interference_factor;
+            obj.wing.aspect_ratio_min = constant_table.wing.aspect_ratio_min;
+            obj.wing.aspect_ratio_max = constant_table.wing.aspect_ratio_max;
+
+            obj.horz_stabiliser.interference_factor = constant_table.horz_stabiliser.interference_factor;
+            obj.horz_stabiliser.area_density = constant_table.horz_stabiliser.area_density;
+
+            obj.vert_stabiliser.interference_factor = constant_table.vert_stabiliser.interference_factor;
+            obj.vert_stabiliser.area_density = constant_table.vert_stabiliser.area_density;
+            obj.vert_stabiliser.angle = constant_table.vert_stabiliser.angle;
+
+            obj.misc_properties.load_factor = constant_table.misc_properties.load_factor;
+            obj.misc_properties.time_safety = constant_table.misc_properties.time_safety;
+            obj.misc_properties.propellor_efficiency = constant_table.misc_properties.propellor_efficiency;
+            obj.misc_properties.electrical_efficiency = constant_table.misc_properties.electrical_efficiency;
+            obj.misc_properties.propulsive_efficiency = constant_table.misc_properties.propulsive_efficiency;
+            obj.misc_properties.density_PETG = constant_table.misc_properties.density_PETG;
+
+            obj.battery.voltage = constant_table.battery.voltage;
+
+            obj.crew = constant_table.crew;
+
+            obj.msc.density = constant_table.msc.density;
+
+            obj.nose.angle = constant_table.nose.angle;
+
+            obj.servos = constant_table.servos;
+
+            obj.guerney = constant_table.guerney;
+
+            obj.patient = constant_table.patient;
+            
+            obj.landing_gear = constant_table.landing_gear;
+
+            obj.electronics = constant_table.electronics;
+            
+            obj.trays.thickness = constant_table.trays.thickness;
+
         end
 
 

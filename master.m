@@ -36,7 +36,7 @@ addpath('./misc_funs/drag');
 %Suppresses warning from readtable:
 warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames'); 
 
-
+constants = constant_table;
 
 %load in the battery table:
 batterySpecs = readtable("BatterySpecs.xlsx");
@@ -73,6 +73,10 @@ while (count < N_valid)
     wing_index    = randi(size(wingSpecs,1));
     horz_index    = randi(3);
     vert_index    = horz_index;
+
+
+    %Link the constants to the aircraft:
+    plane.link_constants(constants)
 
     %Link the battery to the aircraft:
     plane.link_battery( battery_index, batterySpecs);

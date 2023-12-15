@@ -23,7 +23,7 @@ function calc_lengths(plane)
                              3*plane.fuselage.object_spacing;          % fuselage height for mission 2 and 3              [m].
     plane.nose.length = plane.battery.length+0.05;                    % length of nose for mission 2                     [m].
     plane.fuselage.tail_length = plane.fuselage.height/...
-                        tand(plane.tail.angle);                  % length of tail section for mission 2             [m].
+                        tand(plane.vert_stabiliser.angle);                  % length of tail section for mission 2             [m].
 
 
     
