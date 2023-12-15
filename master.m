@@ -15,7 +15,7 @@ close;
 
 load('ranges.mat');
 
-rng("shuffle");
+rng(0);
 
 %Add subdirectories:
 addpath('./misc_funs');
@@ -74,9 +74,9 @@ while (count < N_valid)
  
 
     %Choose the battery, motor, wing, and tail randomly:
-    battery_index = randi(size(batterySpecs,1));
-    motor_index   = randi(size(motorSpecs,1));
-    wing_index    = 9;
+    battery_index = 38;
+    motor_index   = 6;
+    wing_index    = 5;
     horz_index    = 1;
     vert_index    = horz_index;
 
