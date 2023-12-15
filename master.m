@@ -59,6 +59,8 @@ constraints = constraint_set;
 
 N = 0;
 
+options=optimoptions(@fminimax,'Display','off');
+
 tic
 while (count < N_valid)
 
@@ -72,8 +74,8 @@ while (count < N_valid)
     %Choose the battery, motor, wing, and tail randomly:
     battery_index = randi(size(batterySpecs,1));
     motor_index   = randi(size(motorSpecs,1));
-    wing_index    = randi(size(wingSpecs,1));
-    horz_index    = randi(3);
+    wing_index    = 9;
+    horz_index    = 1;
     vert_index    = horz_index;
 
 
@@ -92,10 +94,13 @@ while (count < N_valid)
 
     
     %generate some random params on interval [0,1]:
-    opt_vars = (ranges(:,2)-ranges(:,1)).*rand(size(ranges,1),1) + ranges(:,1);
+    opt_vars0 = (ranges(:,2)-ranges(:,1)).*rand(size(ranges,1),1) + ranges(:,1);
 
-    opt_vars(10) = min(opt_vars(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
+    opt_vars0(10) = min(opt_vars0(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
     stab_vars = 0.55;
+
+    opt_vars = fminimax(@(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),...
+                      opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2), [],options);
 
     [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
 
