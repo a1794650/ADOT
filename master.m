@@ -84,16 +84,13 @@ while (count < N_valid)
     %Link the motor to the aircraft:
     plane.link_motor( motor_index, motorSpecs);
 
-
     %Link the airfoils to the aircraft:
     plane.link_airfoils(wingSpecs, tailSpecs,... 
                         wing_index, horz_index, vert_index);
 
     
     %generate some random params on interval [0,1]:
-    xn = rand(size(ranges,1),1);
-
-    vars = (ranges(:,2)-ranges(:,1)).*xn + ranges(:,1);
+    vars = (ranges(:,2)-ranges(:,1)).*rand(size(ranges,1),1) + ranges(:,1);
 
     vars(10) = min(vars(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
 
