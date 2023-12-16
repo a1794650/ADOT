@@ -18,7 +18,7 @@ function aerofoil_data = JavaFoilData(type)
         initTable = readtable(excelFileName(i), 'Sheet', 1);                    %Look at data at 0 flap size
         t_length = size(initTable.Cl);                                          %Find number of C_L values in database
         t_length = t_length(1);
-        C_L_0 = initTable.Cl(31);                                               %Find initial C_L at 0 angle of attack and 0 flap deflection
+        C_L_0 = initTable.Cl(32);                                               %Find initial C_L at 0 angle of attack and 0 flap deflection
         CL_max = max(initTable.Cl);                                             %Find max of table with 0 flap size to find C_L_alpha slope
         slope = (CL_max - C_L_0)/(t_length/2);                                  %Find C_L_alpha slope
         %finding CD/alpha data

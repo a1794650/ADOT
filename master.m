@@ -75,9 +75,8 @@ N = 0;
 
 options1=optimoptions(@fmincon,'Display','off');
 options=optimoptions(@fminimax,'Display','off');
-
+tic
 while (count < N_valid)
-    tic
     % disp(N);
 
     N = N + 1;
@@ -127,67 +126,24 @@ while (count < N_valid)
 
        count = count + 1;
 
-       disp(N);
+       disp(count);
 
        valid(count) = plane; 
+       toc
+       tic
 
    end
-
-    % for i = 1:N_iters
-    % 
-    %     opt_vars = fminimax(@(opt_vars)weighted_constraints(opt_vars,stab_vars, plane, weights,constraints),...
-    %                  opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2), [],options);
-    % 
-    % 
-    % 
-    %     opt_vars(10) = min(opt_vars(10), 2.5*0.3048); 
-    %     [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
-    % 
-    % 
-    % 
-    %     if (sum(nonlcon>0) == 0) %This means plane has satisfied constraints
-    %         toc
-    % 
-    %         tic
-    % 
-    %         count = count + 1;
-    % 
-    % 
-    % 
-    %         [opt_vars1,S] = fmincon(@(opt_vars)score(plane, opt_vars),opt_vars,[],[],[],[],ranges(:,1),ranges(:,2),...
-    %                     @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options1);
-    % 
-    %         toc
-    % 
-    %         plane.link_opt_vars(opt_vars1);
-    % 
-    %         plane.score.total = S;
-    % 
-    %         valid(count) = plane;
-    % 
-    % 
-    %         disp(count);
-    % 
-    %         break;
-    % 
-    %     else
-    %         opt_vars0 = opt_vars;
-    % 
-    %     end
-    % 
-    % end
-
-    
+ 
    
 end
 
 for i = 1:10
 
-    disp(valid(i).wing.span);
+    disp(valid(i).msc.mass);
 
 
 end
-
+disp("done");
 
 
 function [nonlcon_weighted, eqcon] = weighted_constraints(opt_vars,stab_vars, plane, weights, constraints)
