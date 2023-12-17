@@ -17,7 +17,8 @@ classdef constraint_set
                  "WP";
                  "FW";
                  "PW";
-                 "AR" ];
+                 "AR";
+                 "CL"];
 
         %This description needs to be updated whenever a new function 
         % con_<CODE NAME FOR CONSTRAINT> is added.
@@ -29,7 +30,8 @@ classdef constraint_set
                         "Wing position versus required (WP)";
                         "Check that dolls fit in fuselage width direction (FW)";
                         "Number of passengers exceeds number in width direction (PW)";
-                        "Aspect ratio of wing versus required apsect ratio of wing (AR)"];
+                        "Aspect ratio of wing versus required apsect ratio of wing (AR)"
+                        "Maximum coefficient of lift margin for both missions"];
 
     end
 

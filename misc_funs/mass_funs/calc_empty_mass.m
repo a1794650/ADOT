@@ -17,7 +17,7 @@ function calc_empty_mass(plane)
                            plane.fuselage.wall_thickness*...
                            plane.fuselage.density;
     
-    plane.wing.mass = plane.wing.area*plane.wing.area_density;
+    plane.wing.mass = plane.wing.area*plane.wing.layer_thickness*plane.wing.area_density;
     
     plane.vert_stabiliser.mass = plane.vert_stabiliser.area*...
         plane.vert_stabiliser.area_density;

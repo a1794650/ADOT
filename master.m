@@ -85,10 +85,10 @@ while (count < N_valid)
  
 
     %Choose the battery, motor, wing, and tail randomly:
-    battery_index = 38;
-    motor_index   = 6;
-    wing_index    = 5;
-    horz_index    = 1;
+    battery_index = randi([5 38],1);
+    motor_index   = randi([2 10],1);;
+    wing_index    = randi([7 9],1);;
+    horz_index    = randi([1 3],1);;
     vert_index    = horz_index;
 
 
@@ -123,14 +123,13 @@ while (count < N_valid)
    [nonlcon,eqcon] = constraints.eval_constraints(opt_vars0,stab_vars, plane);
 
    if (sum(nonlcon>0) == 0)
-
+       toc
+       tic
        count = count + 1;
 
        disp(count);
 
        valid(count) = plane; 
-       toc
-       tic
 
    end
  
@@ -139,7 +138,7 @@ end
 
 for i = 1:10
 
-    disp(valid(i).msc.mass);
+    disp(valid(i).cruise_properties.speed2);
 
 
 end
