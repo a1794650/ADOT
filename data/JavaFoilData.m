@@ -6,9 +6,11 @@ function aerofoil_data = JavaFoilData(type)
         excelFileName(2) = "./data/GOE 567";
         excelFileName(3) = "./data/NACA 2112";
         excelFileName(4) = "./data/NACA 6412";
+        excelFileName(5) = "./data/Clark Y";
     else
         %If tail aerofils are required, get data from all tail aerofoils
         excelFileName(1) = "./data/NACA 0009";
+        excelFileName(1) = "./data/NACA 0012";
     end
 
      
