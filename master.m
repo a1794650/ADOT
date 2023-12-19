@@ -29,6 +29,9 @@ load('ranges.mat');
 
 rng(0);
 
+%
+addpath('C:\Users\debna_3tbjgpv\Documents\Design_Build\ADOT_VCR');
+
 %Add subdirectories:
 addpath('./misc_funs');
 addpath('./data');
@@ -114,9 +117,9 @@ while (count < N_valid)
 
     
 
-   [nonlcon,eqcon] = constraints.eval_constraints(opt_vars0,stab_vars, plane);
+   % [nonlcon,eqcon] = constraints.eval_constraints(opt_vars0,stab_vars, plane);
 
-   if (sum(nonlcon>0) == 0)
+   if (1)
        toc
        tic
        count = count + 1;
@@ -143,8 +146,7 @@ end
 
 for i = 1:10
 
-    disp(valid(i).cruise_properties.speed2);
-
+    disp(valid(i).cruise_properties.speed3);
 
 end
 disp("done");

@@ -91,8 +91,9 @@ classdef aircraft < handle &...  %Inherits handle properties.
                                  ,'coeff_drag2', NaN, 'coeff_drag3', NaN);
 
 
-        cruise_properties = struct( 'power', NaN, 'capacity', NaN, 'laps3', ...
-                                    NaN, 'time2', NaN, 'coeff_lift', NaN);
+        cruise_properties = struct( 'capacity', NaN, 'laps3', ...
+                                    NaN, 'time2', NaN, 'coeff_lift', NaN, 'speed2', NaN, ...
+                                     'speed3', NaN);
 
         turning_properties = struct('speed2',NaN, 'speed3' ,NaN, 'power', NaN, 'capacity', NaN, 'laps3', NaN, 'coeff_lift', NaN);
 
@@ -154,6 +155,8 @@ classdef aircraft < handle &...  %Inherits handle properties.
             obj.horz_stabiliser.chord_root   = opt_vars(9);
             obj.horz_stabiliser.span         = opt_vars(10);
             obj.misc_properties.aspect_ratio = opt_vars(11);
+            obj.cruise_properties.speed2     = opt_vars(12);
+            obj.cruise_properties.speed3     = opt_vars(13);
         end
 
 

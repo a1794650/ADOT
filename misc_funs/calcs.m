@@ -19,6 +19,6 @@ function calcs(plane)
 
     calc_COG3(plane);
     
-    calc_V_cr(plane);
+    calc_cruise(plane);
 
 end
