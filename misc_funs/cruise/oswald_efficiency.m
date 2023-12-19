@@ -14,12 +14,10 @@ function [e2,e3] = oswald_efficiency(V_CR_2,V_CR_3, plane)
 
 
 
-    tOnC2 =  plane.wing.chord_root*plane.wing.thickness/...
-            plane.wing.MAC; %Multiplying by C_w_r to normalise the interval.
+    tOnC2 =  plane.wing.thickness; %Multiplying by C_w_r to normalise the interval.
     %Get Harry to check this!!!
 
-    tOnC3 =  plane.wing.chord_root*plane.wing.thickness/...
-            plane.wing.MAC; %Multiplying by C_w_r to normalise the interval.
+    tOnC3 =  plane.wing.thickness; %Multiplying by C_w_r to normalise the interval.
 
     e2 = (1+0.12*(V_CR_2/sqrt(...
         plane.physics.thermodynamic_ratio*...

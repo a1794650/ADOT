@@ -19,10 +19,15 @@ function calc_empty_mass(plane)
     
     plane.wing.mass = plane.wing.area*plane.wing.layer_thickness*plane.wing.area_density;
     
-    plane.vert_stabiliser.mass = plane.vert_stabiliser.area*...
-        plane.vert_stabiliser.area_density;
-    plane.horz_stabiliser.mass = 2*plane.horz_stabiliser.area*...
-        plane.horz_stabiliser.area_density;
+    
+    % for conventional tai;
+    % plane.vert_stabiliser.mass = plane.vert_stabiliser.area*...
+    %     plane.vert_stabiliser.area_density;
+    % plane.horz_stabiliser.mass = 2*plane.horz_stabiliser.area*...
+    %     plane.horz_stabiliser.area_density;
+    
+    %use pythogas to fix
+    1 = hello
     
     plane.fuselage.empty_mass = 1.25*(plane.fuselage.mass+plane.wing.mass+...
         plane.wing.mass+plane.vert_stabiliser.mass+...

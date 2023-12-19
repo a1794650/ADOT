@@ -74,7 +74,7 @@ constraints = constraint_set;
 N = 0;
 
 options1=optimoptions(@fmincon,'Display','off');
-options=optimoptions(@fminimax,'Display','off');
+%options=optimoptions(@fminimax,'Display','off');
 tic
 while (count < N_valid)
     % disp(N);
@@ -86,9 +86,9 @@ while (count < N_valid)
 
     %Choose the battery, motor, wing, and tail randomly:
     battery_index = randi([5 38],1);
-    motor_index   = randi([4 10],1);;
-    wing_index    = randi([7 9],1);;
-    horz_index    = randi([1 3],1);;
+    motor_index   = randi([4 10],1);
+    wing_index    = randi([1 12],1);
+    horz_index    = randi([1 3],1);
     vert_index    = horz_index;
 
 
@@ -112,13 +112,7 @@ while (count < N_valid)
     opt_vars0(10) = min(opt_vars0(10), 2.5*0.3048); % restricting empennage based off concept design (folding wing).
     stab_vars = 0.55;
 
-    % [opt_vars1,S] = fmincon(@(opt_vars)score(plane, opt_vars,stab_vars ),opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
-    %                     @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options1);
-
-
-   plane.link_opt_vars(opt_vars0);
-
-   % plane.score.total = S;
+    
 
    [nonlcon,eqcon] = constraints.eval_constraints(opt_vars0,stab_vars, plane);
 
@@ -128,6 +122,17 @@ while (count < N_valid)
        count = count + 1;
 
        disp(count);
+
+       % valid(count) = plane; 
+
+
+       [opt_vars1,S] = fmincon(@(opt_vars)(-1)*score(plane, opt_vars,stab_vars ),opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
+                    @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options1);
+
+
+       plane.link_opt_vars(opt_vars1);
+
+       plane.score.total = S;
 
        valid(count) = plane; 
 
@@ -145,13 +150,16 @@ end
 disp("done");
 
 
-function [nonlcon_weighted, eqcon] = weighted_constraints(opt_vars,stab_vars, plane, weights, constraints)
-    [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
-    
-    nonlcon_weighted = weights.*nonlcon;
 
-   
-end
+
+
+% function [nonlcon_weighted, eqcon] = weighted_constraints(opt_vars,stab_vars, plane, weights, constraints)
+%     [nonlcon,eqcon] = constraints.eval_constraints(opt_vars,stab_vars, plane);
+% 
+%     nonlcon_weighted = weights.*nonlcon;
+% 
+% 
+% end
 
 
 
