@@ -28,6 +28,7 @@ close;
 load('ranges.mat');
 
 rng(0);
+rng(1234567);
 
 %
 addpath('C:\Users\debna_3tbjgpv\Documents\Design_Build\ADOT_VCR');
@@ -88,10 +89,10 @@ while (count < N_valid)
  
 
     %Choose the battery, motor, wing, and tail randomly:
-    battery_index = randi([5 38],1);
+    battery_index = randi([1 26],1);
     motor_index   = randi([4 10],1);
-    wing_index    = randi([1 12],1);
-    horz_index    = randi([1 3],1);
+    wing_index    = randi([1 15],1);
+    horz_index    = randi([1 6],1);
     vert_index    = horz_index;
 
 
@@ -144,10 +145,10 @@ while (count < N_valid)
    
 end
 
+
+%use this to look at specific vlaues in all designs for debugging
 for i = 1:10
-
-    disp(valid(i).cruise_properties.speed3);
-
+    disp(valid(i).cruise_properties.speed2);
 end
 disp("done");
 

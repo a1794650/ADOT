@@ -10,7 +10,7 @@ function aerofoil_data = JavaFoilData(type)
     else
         %If tail aerofils are required, get data from all tail aerofoils
         excelFileName(1) = "./data/NACA 0009";
-        excelFileName(1) = "./data/NACA 0012";
+        excelFileName(2) = "./data/NACA 0012";
     end
 
      

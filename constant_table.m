@@ -9,7 +9,7 @@ classdef constant_table
         %Constants related to the whole plane:
         
         static_margin_min_req = 0.05;
-        static_margin_max_req = 0.1;
+        static_margin_max_req = 0.2;
 
         num_power_vals = 10;
 
