@@ -1,1 +1,0 @@
-unsigned int SetThreadExecutionState(unsigned int esFlags);

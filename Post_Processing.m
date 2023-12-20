@@ -6,14 +6,17 @@
 function best_design = Post_Processing()
 clear;
 clc;
+
+addpath('./aircrafts');
+
 % Specify the folder path
-folder_path = './test';
+folder_path = './aircrafts';
 
 % Get a list of all Excel files in the folder
-files = dir(fullfile(folder_path, '*.xlsx'));
+files = dir(fullfile(folder_path, '*.mat'));
 
 %Define array in which the scores are stored in as they increase
-Best_Scores = [0];
+Best_Scores = 0;
 % Loop through each Excel file and read it into a table
 for i = 1:length(files)
     % Get the current file name
@@ -23,17 +26,17 @@ for i = 1:length(files)
     file_path = fullfile(folder_path, file_name);
     
     % Read the current Excel file into a table
-    data_table = readtable(file_path);
-    for j=1:length(data_table.score)
-        if (data_table.score(j)>Best_Scores(end))
-            Best_Scores = [Best_Scores, data_table.score(j)];
-            best_design.file_index = i;
-            best_design.index = j;
+    data_table = load(file_path);
+    for j=1:length(data_table.optimised)
+        data_table.optimised(j).score.total = -data_table.optimised(j).score.total;
+        if (data_table.optimised(j).score.total>Best_Scores(end))
+            Best_Scores = [Best_Scores, data_table.optimised(j).score.total];
+            best_design = data_table.optimised(j);
         else
             Best_Scores = [Best_Scores, Best_Scores(end)];
         end
     end
-    
+    clear("optimised");
 end
 
 plot(Best_Scores);
