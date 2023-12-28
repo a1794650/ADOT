@@ -103,7 +103,8 @@ classdef aircraft < handle &...  %Inherits handle properties.
                                  'propellor_efficiency',NaN,...
                                  'electrical_efficiency',NaN,...
                                  'propulsive_efficiency',NaN, ...
-                                 'density_PETG', NaN);
+                                 'density_PETG', NaN,...
+                                 'stall_speed_max', NaN);
 
         battery = struct('capacity', NaN, 'voltage', NaN, 'mass',NaN,...
                          'height', NaN, 'length', NaN);
@@ -244,6 +245,7 @@ classdef aircraft < handle &...  %Inherits handle properties.
             obj.misc_properties.electrical_efficiency = constant_table.misc_properties.electrical_efficiency;
             obj.misc_properties.propulsive_efficiency = constant_table.misc_properties.propulsive_efficiency;
             obj.misc_properties.density_PETG = constant_table.misc_properties.density_PETG;
+            obj.misc_properties.stall_speed_max = constant_table.misc_properties.stall_speed_max;
 
             obj.battery.voltage = constant_table.battery.voltage;
 

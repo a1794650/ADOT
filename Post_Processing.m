@@ -16,7 +16,7 @@ folder_path = './aircrafts';
 files = dir(fullfile(folder_path, '*.mat'));
 
 %Define array in which the scores are stored in as they increase
-Best_Scores = 0;
+Best_Scores = [];
 % Loop through each Excel file and read it into a table
 for i = 1:length(files)
     % Get the current file name
@@ -29,7 +29,10 @@ for i = 1:length(files)
     data_table = load(file_path);
     for j=1:length(data_table.optimised)
         data_table.optimised(j).score.total = -data_table.optimised(j).score.total;
-        if (data_table.optimised(j).score.total>Best_Scores(end))
+        if(size(Best_Scores) == 0)
+            Best_Scores = [Best_Scores, data_table.optimised(j).score.total];
+            best_design = data_table.optimised(j);
+        elseif (data_table.optimised(j).score.total>Best_Scores(end))
             Best_Scores = [Best_Scores, data_table.optimised(j).score.total];
             best_design = data_table.optimised(j);
         else

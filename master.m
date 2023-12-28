@@ -90,7 +90,7 @@ while (count < N_valid)
 
     %Choose the battery, motor, wing, and tail randomly:
     battery_index = randi([1 26],1);
-    motor_index   = randi([4 10],1);
+    motor_index   = randi([6 6],1);
     wing_index    = randi([1 15],1);
     horz_index    = randi([1 6],1);
     vert_index    = horz_index;

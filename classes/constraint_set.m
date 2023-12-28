@@ -19,7 +19,8 @@ classdef constraint_set
                  "PW";
                  "AR";
                  "CL"
-                 "CR"];
+                 "CR"
+                 "ST"];
 
         %This description needs to be updated whenever a new function 
         % con_<CODE NAME FOR CONSTRAINT> is added.
@@ -33,7 +34,8 @@ classdef constraint_set
                         "Number of passengers exceeds number in width direction (PW)";
                         "Aspect ratio of wing versus required apsect ratio of wing (AR)"
                         "Maximum coefficient of lift margin for both missions"
-                        "Motor power required for cruise (CR)"];
+                        "Motor power required for cruise (CR)"
+                        "Stall speed requirenment (ST)"];
 
     end
 
