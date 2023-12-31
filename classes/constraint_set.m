@@ -20,7 +20,7 @@ classdef constraint_set
                  "AR";
                  "CL"
                  "CR"
-                 "ST"];
+                 "EL"];
 
         %This description needs to be updated whenever a new function 
         % con_<CODE NAME FOR CONSTRAINT> is added.
@@ -35,7 +35,7 @@ classdef constraint_set
                         "Aspect ratio of wing versus required apsect ratio of wing (AR)"
                         "Maximum coefficient of lift margin for both missions"
                         "Motor power required for cruise (CR)"
-                        "Stall speed requirenment (ST)"];
+                        "Length of the empennage minimum requirenment"];
 
     end
 

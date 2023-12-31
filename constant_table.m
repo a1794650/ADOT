@@ -8,8 +8,8 @@ classdef constant_table
     properties
         %Constants related to the whole plane:
         
-        static_margin_min_req = 0.05;
-        static_margin_max_req = 0.2;
+        static_margin_min_req = 0.01;
+        static_margin_max_req = 0.08;
 
         num_power_vals = 10;
 
@@ -29,7 +29,7 @@ classdef constant_table
         %Size of the course that we will fly through.
         course = struct('length', 610, 'takeoff_distance' ,20);
 
-        score = struct('baseline2',0.01,'baseline3',0.005);
+        score = struct('baseline2',0.06,'baseline3',0.2);
 
         passengers = struct('doll_length', 0.1397, 'doll_width', 0.0428, 'doll_mass',0.015);
         

@@ -47,7 +47,7 @@ function calc_lengths(plane)
         2*plane.fuselage.object_spacing;
     
     
-    plane.fuselage.length3 = plane.passengers.doll_length + ...                  %Length of fuselage required for mission 3
+    plane.fuselage.length3 = plane.passengers.length + ...                  %Length of fuselage required for mission 3
         plane.fuselage.wall_thickness+plane.cabin.length;
 
     plane.fuselage.length = max(plane.fuselage.length2,...                  %The length of the fuselage to be built is the greatest of the requirenmenets for missions 2 and 3

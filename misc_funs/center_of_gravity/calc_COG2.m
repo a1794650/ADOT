@@ -10,7 +10,7 @@ function calc_COG2(plane)
     plane.wing.COG    = plane.wing.position + 0.5*plane.wing.chord_root;                                                      %Center of gravity of wings
     plane.motor.COG   = plane.wing.position;                                                                %Center of gravity of the motor (assumed to be at the tip of the wing)
     plane.battery.COG = plane.nose.length + 0.5*plane.battery.length;                                          %Assume that the battery is as close ot the front of the plane as that gives the msot stable design.
-    plane.horz_stabiliser.COG = plane.wing.span*plane.misc_properties.aspect_ratio...
+    plane.horz_stabiliser.COG = plane.wing.span/plane.misc_properties.aspect_ratio...
                                 - 0.5*plane.horz_stabiliser.chord_root;                                                        %Center of Gravity of Tail
     %Landing Gear - assumed to be in the center of the fuelage for the
     %purpose of CG calcs

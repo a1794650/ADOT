@@ -28,10 +28,9 @@ close;
 load('ranges.mat');
 
 rng(0);
-rng(1234567);
+rng('shuffle');
 
-%
-addpath('C:\Users\debna_3tbjgpv\Documents\Design_Build\ADOT_VCR');
+
 
 %Add subdirectories:
 addpath('./misc_funs');
@@ -68,7 +67,7 @@ tailSpecs = JavaFoilData('tail');
 
 count = 0;
 
-N_valid = 10;
+N_valid = 2000;
 
 N_iters = 1;
 
@@ -77,7 +76,7 @@ constraints = constraint_set;
 
 N = 0;
 
-options1=optimoptions(@fmincon,'Display','off');
+options1=optimoptions(@fmincon,'Display','off', 'ConstraintTolerance', 0);
 %options=optimoptions(@fminimax,'Display','off');
 tic
 while (count < N_valid)
@@ -89,7 +88,7 @@ while (count < N_valid)
  
 
     %Choose the battery, motor, wing, and tail randomly:
-    battery_index = randi([1 26],1);
+    battery_index = randi([4 26],1);
     motor_index   = randi([6 6],1);
     wing_index    = randi([1 15],1);
     horz_index    = randi([1 6],1);
@@ -146,10 +145,13 @@ while (count < N_valid)
 end
 
 
-%use this to look at specific vlaues in all designs for debugging
+%use this to look at specific   vlaues in all designs for debugging
 for i = 1:10
-    disp(valid(i).cruise_properties.speed2);
+    disp(valid(i).score.total);
 end
+filename = "optimised_designs.mat";
+save(filename,"valid")
+
 disp("done");
 
 

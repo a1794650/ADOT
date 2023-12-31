@@ -27,19 +27,19 @@ for i = 1:length(files)
     
     % Read the current Excel file into a table
     data_table = load(file_path);
-    for j=1:length(data_table.optimised)
-        data_table.optimised(j).score.total = -data_table.optimised(j).score.total;
+    for j=1:length(data_table.valid)
+        data_table.valid(j).score.total = -data_table.valid(j).score.total;
         if(size(Best_Scores) == 0)
-            Best_Scores = [Best_Scores, data_table.optimised(j).score.total];
-            best_design = data_table.optimised(j);
-        elseif (data_table.optimised(j).score.total>Best_Scores(end))
-            Best_Scores = [Best_Scores, data_table.optimised(j).score.total];
-            best_design = data_table.optimised(j);
+            Best_Scores = [Best_Scores, data_table.valid(j).score.total];
+            best_design = data_table.valid(j);
+        elseif (data_table.valid(j).score.total>Best_Scores(end))
+            Best_Scores = [Best_Scores, data_table.valid(j).score.total];
+            best_design = data_table.valid(j);
         else
             Best_Scores = [Best_Scores, Best_Scores(end)];
         end
     end
-    clear("optimised");
+    %clear("valid");
 end
 
 plot(Best_Scores);
