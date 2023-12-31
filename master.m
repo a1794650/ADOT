@@ -28,7 +28,7 @@ close;
 load('ranges.mat');
 
 rng(0);
-rng('shuffle');
+rng(1);
 
 
 
@@ -120,24 +120,23 @@ while (count < N_valid)
    % [nonlcon,eqcon] = constraints.eval_constraints(opt_vars0,stab_vars, plane);
 
    if (1)
-       toc
-       tic
-       count = count + 1;
 
-       disp(count);
 
        % valid(count) = plane; 
 
-
-       [opt_vars1,S] = fmincon(@(opt_vars)(-1)*score(plane, opt_vars,stab_vars ),opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
+       [opt_vars1,S, exitflag] = fmincon(@(opt_vars)(-1)*score(plane, opt_vars,stab_vars ),opt_vars0,[],[],[],[],ranges(:,1),ranges(:,2),...
                     @(opt_vars)constraints.eval_constraints(opt_vars,stab_vars, plane),options1);
-
 
        plane.link_opt_vars(opt_vars1);
 
        plane.score.total = S;
-
-       valid(count) = plane; 
+       if(exitflag == 1)
+           toc
+            tic
+            count = count + 1;
+            valid(count) = plane; 
+            disp(count);
+       end
 
    end
  

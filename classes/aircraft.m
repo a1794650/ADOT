@@ -107,7 +107,8 @@ classdef aircraft < handle &...  %Inherits handle properties.
                                  'stall_speed_max', NaN);
 
         battery = struct('capacity', NaN, 'voltage', NaN, 'mass',NaN,...
-                         'height', NaN, 'length', NaN);
+                         'height', NaN, 'length', NaN, 'required_capacity2', ...
+                         NaN, 'required_capacity3', NaN);
 
         motor = struct('number', NaN, 'power_max', NaN, 'mass', NaN);
 
